@@ -8,7 +8,7 @@ def send_account_activation_mail(request, user):
     activation_url = "".join([base_url, 'account/activate/', f'{user.username}/', f'{key}/'])
     subject = "Account Activation"
     message = f"""
-    Hello, {user.get_full_name()}. Please click the provided link to activate your account.
+    Hello, {user.get_full_name}. Please click the provided link to activate your account.
     {activation_url}
     """
     from_email = "noreply@myproject.com"

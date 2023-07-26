@@ -5,8 +5,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .serializers import UserSerializer, UserProfileSerializer
-from .utils import send_account_activation_mail
-from .models import UserAccountActivationKey
+from apps.account.utils import send_account_activation_mail
+from apps.account.models import UserAccountActivationKey
 
 
 class UserRegistrationAPIView(APIView):
@@ -22,7 +22,6 @@ class UserRegistrationAPIView(APIView):
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class UserLoginAPIView(APIView):
     permission_classes = [AllowAny]

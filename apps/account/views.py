@@ -16,7 +16,6 @@ from .models import UserAccountActivationKey, UserProfile
 
 User = get_user_model()
 
-
 @method_decorator(redirect_to_home_if_authenticated, name='get')
 class UserRegistrationView(CreateView):
     form_class = UserRegistrationForm
@@ -107,7 +106,7 @@ class UserProfileUpdateView(CreateView):
         if form.is_valid():
             resume = form.cleaned_data.pop('resume', None)
             pp = form.cleaned_data.pop('profile_picture', None)
-            up, _ = UserProfile.objects.update_or_create(user=self.request.user, defaults=form.cleaned_data)
+            up, _ = UserProfile.objects.update_or_create(User=self.request.user, defaults=form.cleaned_data)
             if resume or pp:
                 if resume:
                     up.resume = resume
@@ -116,8 +115,12 @@ class UserProfileUpdateView(CreateView):
                 up.save()
 
             messages.success(request, "Your Profule has been updated. !")
-            return self.form_valid(form)
+            return redirect('user_profile')
 
         else:
-            messages.error(request, "Invalid Request Data !")
+            error_dict = form.errors.get_json_data()
+            error_dict_values = list(error_dict.value())
+            error_messg = error_dict_values[0][0].get('message')
+            messages.error(request, error_messg)
+            # messages.error(request, form.errors) #or we can use this for specific error
             return self.form_invalid(form)
