@@ -48,7 +48,7 @@ style="height: 300px; width: 300px; border-radius: 20px">
 {% endif %}
 </p>
 <p><b>Account Status</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-{% if request.user.email_activated %}
+{% if request.user.account_activated %}
 Active
 {% else %}
 Inactive
